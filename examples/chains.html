@@ -1,0 +1,473 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Примеры цепочек &mdash; Evolution LangChain 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=95aa0e50" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=af2ce170"></script>
+      <script src="../_static/doctools.js?v=888ff710"></script>
+      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Продвинутые примеры" href="advanced.html" />
+    <link rel="prev" title="Базовые примеры" href="basic.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Evolution LangChain
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Руководство пользователя:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Быстрый старт</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Установка</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/basics.html">Основы использования</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/langchain-integration.html">Интеграция с LangChain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/token-management.html">Управление токенами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/error-handling.html">Обработка ошибок</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Примеры:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="basic.html">Базовые примеры</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Примеры цепочек</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Простая цепочка</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Цепочка с несколькими переменными</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">Цепочка с форматированием</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">Цепочка с валидацией</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">Цепочка с обработкой ошибок</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">Полный пример</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">Что дальше?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="advanced.html">Продвинутые примеры</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API документация:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/evolution-inference.html">EvolutionInference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/token-manager.html">TokenManager</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Evolution LangChain</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Примеры цепочек</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/cloud-ru-tech/evolution-langchain-python/blob/main/docs/examples/chains.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>Примеры цепочек<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
+<p>Этот раздел содержит примеры использования Evolution LangChain с LangChain цепочками.</p>
+<section id="id2">
+<h2>Простая цепочка<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<p>Базовый пример создания цепочки:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">evolution_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvolutionInference</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.chains</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMChain</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.prompts</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptTemplate</span>
+
+<span class="c1"># Создание шаблона</span>
+<span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;Ответь на вопрос: </span><span class="si">{question}</span><span class="s2">&quot;</span>
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">PromptTemplate</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="n">template</span><span class="p">,</span> <span class="n">input_variables</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">])</span>
+
+<span class="c1"># Создание LLM</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model-name&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Создание цепочки</span>
+<span class="n">chain</span> <span class="o">=</span> <span class="n">LLMChain</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">)</span>
+
+<span class="c1"># Выполнение</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">chain</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;Что такое машинное обучение?&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>Цепочка с несколькими переменными<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<p>Использование нескольких входных переменных:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">evolution_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvolutionInference</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.chains</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMChain</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.prompts</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptTemplate</span>
+
+<span class="c1"># Шаблон с несколькими переменными</span>
+<span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Ты - эксперт по </span><span class="si">{topic}</span><span class="s2">. Ответь на вопрос подробно и информативно.</span>
+
+<span class="s2">Вопрос: </span><span class="si">{question}</span>
+
+<span class="s2">Уровень сложности: </span><span class="si">{difficulty}</span>
+
+<span class="s2">Ответ:&quot;&quot;&quot;</span>
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">PromptTemplate</span><span class="p">(</span>
+    <span class="n">template</span><span class="o">=</span><span class="n">template</span><span class="p">,</span>
+    <span class="n">input_variables</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="s2">&quot;question&quot;</span><span class="p">,</span> <span class="s2">&quot;difficulty&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Создание LLM</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model-name&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Создание цепочки</span>
+<span class="n">chain</span> <span class="o">=</span> <span class="n">LLMChain</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">)</span>
+
+<span class="c1"># Выполнение с несколькими параметрами</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">chain</span><span class="o">.</span><span class="n">run</span><span class="p">({</span>
+    <span class="s2">&quot;topic&quot;</span><span class="p">:</span> <span class="s2">&quot;машинное обучение&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="s2">&quot;Что такое нейронные сети?&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;difficulty&quot;</span><span class="p">:</span> <span class="s2">&quot;начальный&quot;</span>
+<span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2>Цепочка с форматированием<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<p>Использование форматирования в шаблонах:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">evolution_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvolutionInference</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.chains</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMChain</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.prompts</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptTemplate</span>
+
+<span class="c1"># Шаблон с форматированием</span>
+<span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2"># Инструкция</span>
+
+<span class="s2">Ты - </span><span class="si">{role}</span><span class="s2">. Твоя задача: </span><span class="si">{task}</span>
+
+<span class="s2">## Контекст</span>
+<span class="si">{context}</span>
+
+<span class="s2">## Запрос</span>
+<span class="si">{request}</span>
+
+<span class="s2">## Требования</span>
+<span class="s2">- Длина ответа: </span><span class="si">{length}</span>
+<span class="s2">- Стиль: </span><span class="si">{style}</span>
+<span class="s2">- Язык: </span><span class="si">{language}</span>
+
+<span class="s2">## Ответ</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">PromptTemplate</span><span class="p">(</span>
+    <span class="n">template</span><span class="o">=</span><span class="n">template</span><span class="p">,</span>
+    <span class="n">input_variables</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;role&quot;</span><span class="p">,</span> <span class="s2">&quot;task&quot;</span><span class="p">,</span> <span class="s2">&quot;context&quot;</span><span class="p">,</span> <span class="s2">&quot;request&quot;</span><span class="p">,</span> <span class="s2">&quot;length&quot;</span><span class="p">,</span> <span class="s2">&quot;style&quot;</span><span class="p">,</span> <span class="s2">&quot;language&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Создание LLM</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model-name&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Создание цепочки</span>
+<span class="n">chain</span> <span class="o">=</span> <span class="n">LLMChain</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">)</span>
+
+<span class="c1"># Выполнение</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">chain</span><span class="o">.</span><span class="n">run</span><span class="p">({</span>
+    <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;эксперт по программированию&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="s2">&quot;объяснить концепцию&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;context&quot;</span><span class="p">:</span> <span class="s2">&quot;Пользователь изучает Python&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;request&quot;</span><span class="p">:</span> <span class="s2">&quot;Что такое функции?&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="s2">&quot;кратко&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;style&quot;</span><span class="p">:</span> <span class="s2">&quot;простой&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;language&quot;</span><span class="p">:</span> <span class="s2">&quot;русский&quot;</span>
+<span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2>Цепочка с валидацией<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<p>Добавление валидации входных данных:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">evolution_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvolutionInference</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.chains</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMChain</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.prompts</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptTemplate</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.output_parsers</span><span class="w"> </span><span class="kn">import</span> <span class="n">PydanticOutputParser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span>
+
+<span class="c1"># Модель для валидации вывода</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CodeExplanation</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">concept</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Название концепции&quot;</span><span class="p">)</span>
+    <span class="n">explanation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Объяснение концепции&quot;</span><span class="p">)</span>
+    <span class="n">examples</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Примеры использования&quot;</span><span class="p">)</span>
+    <span class="n">difficulty</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Уровень сложности&quot;</span><span class="p">)</span>
+
+<span class="c1"># Создание парсера</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="n">PydanticOutputParser</span><span class="p">(</span><span class="n">pydantic_object</span><span class="o">=</span><span class="n">CodeExplanation</span><span class="p">)</span>
+
+<span class="c1"># Шаблон с парсером</span>
+<span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Объясни концепцию программирования в следующем формате:</span>
+
+<span class="si">{format_instructions}</span>
+
+<span class="s2">Концепция: </span><span class="si">{concept}</span>
+
+<span class="s2">Объяснение:&quot;&quot;&quot;</span>
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">PromptTemplate</span><span class="p">(</span>
+    <span class="n">template</span><span class="o">=</span><span class="n">template</span><span class="p">,</span>
+    <span class="n">input_variables</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;concept&quot;</span><span class="p">],</span>
+    <span class="n">partial_variables</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;format_instructions&quot;</span><span class="p">:</span> <span class="n">parser</span><span class="o">.</span><span class="n">get_format_instructions</span><span class="p">()}</span>
+<span class="p">)</span>
+
+<span class="c1"># Создание LLM</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model-name&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Создание цепочки</span>
+<span class="n">chain</span> <span class="o">=</span> <span class="n">LLMChain</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">)</span>
+
+<span class="c1"># Выполнение с парсингом</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">chain</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;функции&quot;</span><span class="p">)</span>
+<span class="n">parsed_result</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Концепция: </span><span class="si">{</span><span class="n">parsed_result</span><span class="o">.</span><span class="n">concept</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Объяснение: </span><span class="si">{</span><span class="n">parsed_result</span><span class="o">.</span><span class="n">explanation</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Примеры: </span><span class="si">{</span><span class="n">parsed_result</span><span class="o">.</span><span class="n">examples</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Сложность: </span><span class="si">{</span><span class="n">parsed_result</span><span class="o">.</span><span class="n">difficulty</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2>Цепочка с обработкой ошибок<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h2>
+<p>Добавление обработки ошибок:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">evolution_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvolutionInference</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.chains</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMChain</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.prompts</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptTemplate</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_chain_with_retry</span><span class="p">():</span>
+    <span class="c1"># Создание шаблона</span>
+    <span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;Ответь на вопрос: </span><span class="si">{question}</span><span class="s2">&quot;</span>
+    <span class="n">prompt</span> <span class="o">=</span> <span class="n">PromptTemplate</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="n">template</span><span class="p">,</span> <span class="n">input_variables</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">])</span>
+
+    <span class="c1"># Создание LLM</span>
+    <span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model-name&quot;</span><span class="p">,</span>
+        <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+        <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+        <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Создание цепочки</span>
+    <span class="n">chain</span> <span class="o">=</span> <span class="n">LLMChain</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">chain</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">run_chain_with_retry</span><span class="p">(</span><span class="n">chain</span><span class="p">,</span> <span class="n">question</span><span class="p">,</span> <span class="n">max_retries</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_retries</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">chain</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Попытка </span><span class="si">{</span><span class="n">attempt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> не удалась: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">max_retries</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">attempt</span><span class="p">)</span>  <span class="c1"># Экспоненциальная задержка</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">e</span>
+
+<span class="c1"># Использование</span>
+<span class="n">chain</span> <span class="o">=</span> <span class="n">create_chain_with_retry</span><span class="p">()</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">run_chain_with_retry</span><span class="p">(</span><span class="n">chain</span><span class="p">,</span> <span class="s2">&quot;Что такое Python?&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Все попытки не удались: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h2>Полный пример<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h2>
+<p>Объединение всех возможностей цепочек:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">evolution_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvolutionInference</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.chains</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMChain</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.prompts</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptTemplate</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🚀 Evolution LangChain - Примеры цепочек&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+    <span class="c1"># Создание LLM</span>
+    <span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EVOLUTION_MODEL&quot;</span><span class="p">,</span> <span class="s2">&quot;your-model-name&quot;</span><span class="p">),</span>
+        <span class="n">key_id</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EVOLUTION_KEY_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;your-key-id&quot;</span><span class="p">),</span>
+        <span class="n">secret</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EVOLUTION_SECRET&quot;</span><span class="p">,</span> <span class="s2">&quot;your-secret&quot;</span><span class="p">),</span>
+        <span class="n">base_url</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EVOLUTION_BASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ LLM инициализирован&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+    <span class="c1"># 1. Простая цепочка</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1. Простая цепочка:&quot;</span><span class="p">)</span>
+    <span class="n">template1</span> <span class="o">=</span> <span class="s2">&quot;Ответь на вопрос: </span><span class="si">{question}</span><span class="s2">&quot;</span>
+    <span class="n">prompt1</span> <span class="o">=</span> <span class="n">PromptTemplate</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="n">template1</span><span class="p">,</span> <span class="n">input_variables</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">])</span>
+    <span class="n">chain1</span> <span class="o">=</span> <span class="n">LLMChain</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="n">prompt1</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">result1</span> <span class="o">=</span> <span class="n">chain1</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;Что такое Python?&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ответ: </span><span class="si">{</span><span class="n">result1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Ошибка: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+    <span class="c1"># 2. Цепочка с несколькими переменными</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2. Цепочка с несколькими переменными:&quot;</span><span class="p">)</span>
+    <span class="n">template2</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Ты - эксперт по </span><span class="si">{topic}</span><span class="s2">.</span>
+<span class="s2">    Объясни концепцию &#39;</span><span class="si">{concept}</span><span class="s2">&#39; для уровня </span><span class="si">{level}</span><span class="s2">.</span>
+
+<span class="s2">    Объяснение:&quot;&quot;&quot;</span>
+
+    <span class="n">prompt2</span> <span class="o">=</span> <span class="n">PromptTemplate</span><span class="p">(</span>
+        <span class="n">template</span><span class="o">=</span><span class="n">template2</span><span class="p">,</span>
+        <span class="n">input_variables</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="s2">&quot;concept&quot;</span><span class="p">,</span> <span class="s2">&quot;level&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">chain2</span> <span class="o">=</span> <span class="n">LLMChain</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="n">prompt2</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">result2</span> <span class="o">=</span> <span class="n">chain2</span><span class="o">.</span><span class="n">run</span><span class="p">({</span>
+            <span class="s2">&quot;topic&quot;</span><span class="p">:</span> <span class="s2">&quot;программирование&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;concept&quot;</span><span class="p">:</span> <span class="s2">&quot;функции&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="s2">&quot;новичок&quot;</span>
+        <span class="p">})</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ответ: </span><span class="si">{</span><span class="n">result2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Ошибка: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+    <span class="c1"># 3. Цепочка с форматированием</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;3. Цепочка с форматированием:&quot;</span><span class="p">)</span>
+    <span class="n">template3</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    # Задача</span>
+<span class="s2">    Создай краткое описание технологии.</span>
+
+<span class="s2">    ## Технология: </span><span class="si">{technology}</span>
+<span class="s2">    ## Назначение: </span><span class="si">{purpose}</span>
+
+<span class="s2">    ## Описание</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="n">prompt3</span> <span class="o">=</span> <span class="n">PromptTemplate</span><span class="p">(</span>
+        <span class="n">template</span><span class="o">=</span><span class="n">template3</span><span class="p">,</span>
+        <span class="n">input_variables</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;technology&quot;</span><span class="p">,</span> <span class="s2">&quot;purpose&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">chain3</span> <span class="o">=</span> <span class="n">LLMChain</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="n">prompt3</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">result3</span> <span class="o">=</span> <span class="n">chain3</span><span class="o">.</span><span class="n">run</span><span class="p">({</span>
+            <span class="s2">&quot;technology&quot;</span><span class="p">:</span> <span class="s2">&quot;Docker&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;purpose&quot;</span><span class="p">:</span> <span class="s2">&quot;контейнеризация приложений&quot;</span>
+        <span class="p">})</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ответ: </span><span class="si">{</span><span class="n">result3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Ошибка: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🎉 Примеры цепочек завершены!&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h2>Что дальше?<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>Изучите <a class="reference internal" href="advanced.html"><span class="doc">Продвинутые примеры</span></a> для сложных сценариев</p></li>
+<li><p>Прочитайте <a class="reference internal" href="../guide/langchain-integration.html"><span class="doc">Интеграция с LangChain</span></a> для продвинутых паттернов</p></li>
+<li><p>Посмотрите <a class="reference internal" href="../api/evolution-inference.html"><span class="doc">EvolutionInference</span></a> для справки по API</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="basic.html" class="btn btn-neutral float-left" title="Базовые примеры" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="advanced.html" class="btn btn-neutral float-right" title="Продвинутые примеры" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Evolution ML Inference Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

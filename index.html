@@ -1,0 +1,343 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evolution LangChain Documentation &mdash; Evolution LangChain 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=95aa0e50" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=af2ce170"></script>
+      <script src="_static/doctools.js?v=888ff710"></script>
+      <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Быстрый старт" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Evolution LangChain
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Руководство пользователя:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Быстрый старт</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Установка</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/basics.html">Основы использования</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/langchain-integration.html">Интеграция с LangChain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/token-management.html">Управление токенами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide/error-handling.html">Обработка ошибок</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Примеры:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/basic.html">Базовые примеры</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/chains.html">Примеры цепочек</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/advanced.html">Продвинутые примеры</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API документация:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/evolution-inference.html">EvolutionInference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/token-manager.html">TokenManager</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Evolution LangChain</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Evolution LangChain Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/cloud-ru-tech/evolution-langchain-python/blob/main/docs/index.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="evolution-langchain-documentation">
+<h1>Evolution LangChain Documentation<a class="headerlink" href="#evolution-langchain-documentation" title="Permalink to this heading"></a></h1>
+<a class="reference external image-reference" href="https://pypi.org/project/evolution-langchain/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/evolution-langchain.svg" /></a>
+<a class="reference external image-reference" href="https://pypi.org/project/evolution-langchain/"><img alt="Python versions" src="https://img.shields.io/pypi/pyversions/evolution-langchain.svg" /></a>
+<a class="reference external image-reference" href="https://opensource.org/licenses/MIT"><img alt="License" src="https://img.shields.io/badge/license-MIT-green.svg" /></a>
+<p><strong>Evolution LangChain</strong> - это современная интеграция Evolution Inference API с экосистемой LangChain, обеспечивающая автоматическое управление токенами доступа и полную совместимость с OpenAI API.</p>
+<section id="id1">
+<h2>Особенности<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<p>✅ <strong>Автоматическое управление токенами</strong> - Автоматическое получение и обновление access_token с буферизацией и thread-safe операциями</p>
+<p>✅ <strong>Совместимость с OpenAI API</strong> - Полная совместимость с форматом OpenAI API для легкой миграции существующих проектов</p>
+<p>✅ <strong>Нативная интеграция с LangChain</strong> - Работает со всеми компонентами LangChain: цепочками, агентами, векторными хранилищами</p>
+<p>✅ <strong>Thread-safe</strong> - Безопасное использование в многопоточных приложениях с автоматической синхронизацией</p>
+<p>✅ <strong>Автоматическое восстановление</strong> - Автоматическое обновление токенов при истечении срока с обработкой ошибок</p>
+<p>✅ <strong>Простота использования</strong> - Минимальная настройка, максимальная функциональность из коробки</p>
+</section>
+<section id="id2">
+<h2>Быстрый старт<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<section id="id3">
+<h3>Установка<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>evolution-langchain
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>Основное использование<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">evolution_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvolutionInference</span>
+
+<span class="c1"># Инициализация модели</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model-name&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Простой запрос</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;Привет! Как дела?&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="langchain">
+<h3>Интеграция с LangChain<a class="headerlink" href="#langchain" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">evolution_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvolutionInference</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.chains</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMChain</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.prompts</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptTemplate</span>
+
+<span class="c1"># Создание шаблона</span>
+<span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;Ответь на вопрос: </span><span class="si">{question}</span><span class="s2">&quot;</span>
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">PromptTemplate</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="n">template</span><span class="p">,</span> <span class="n">input_variables</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;question&quot;</span><span class="p">])</span>
+
+<span class="c1"># Создание цепочки</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span>
+<span class="p">)</span>
+<span class="n">chain</span> <span class="o">=</span> <span class="n">LLMChain</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">)</span>
+
+<span class="c1"># Выполнение</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">chain</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;Что такое машинное обучение?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id5">
+<h2>Содержание<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Руководство пользователя:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Быстрый старт</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id2">Установка</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id3">Получение учетных данных</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id4">Первый запрос</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id5">Использование переменных окружения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id6">Основные возможности</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id11">Что дальше?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Установка</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#id2">Требования к системе</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#pip">Установка через pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#poetry">Установка через Poetry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#id3">Установка из исходного кода</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#id4">Установка для разработки</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#id5">Проверка установки</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#id6">Обновление</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#id7">Удаление</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#id8">Зависимости</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#id9">Настройка окружения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#id11">Возможные проблемы</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#id15">Что дальше?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide/basics.html">Основы использования</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide/basics.html#id2">Инициализация</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/basics.html#id5">Параметры конфигурации</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/basics.html#id8">Основные методы</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/basics.html#id10">Настройка параметров генерации</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/basics.html#langchain">Интеграция с LangChain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/basics.html#id15">Обработка ошибок</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/basics.html#id18">Что дальше?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide/langchain-integration.html">Интеграция с LangChain</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide/langchain-integration.html#id1">Основы интеграции</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/langchain-integration.html#chains">Цепочки (Chains)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/langchain-integration.html#agents">Агенты (Agents)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/langchain-integration.html#id4">Векторные хранилища</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/langchain-integration.html#id6">Обработка документов</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/langchain-integration.html#id9">Кэширование в LangChain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/langchain-integration.html#callbacks">Callbacks и мониторинг</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/langchain-integration.html#id10">Продвинутые паттерны</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/langchain-integration.html#id12">Лучшие практики</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/langchain-integration.html#id16">Полный пример интеграции</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/langchain-integration.html#id17">Что дальше?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide/token-management.html">Управление токенами</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide/token-management.html#id2">Автоматическое управление</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/token-management.html#id3">Жизненный цикл токена</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/token-management.html#id4">Особенности реализации</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/token-management.html#id7">Конфигурация аутентификации</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/token-management.html#id9">Мониторинг токенов</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/token-management.html#id12">Безопасность</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/token-management.html#id15">Обработка ошибок токенов</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/token-management.html#id17">Полный пример</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/token-management.html#id18">Что дальше?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide/error-handling.html">Обработка ошибок</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide/error-handling.html#id2">Типы ошибок</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/error-handling.html#id3">Обработка ошибок аутентификации</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/error-handling.html#id6">Обработка сетевых ошибок</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/error-handling.html#id8">Обработка ошибок генерации</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/error-handling.html#id11">Логирование ошибок</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/error-handling.html#id14">Полный пример обработки ошибок</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/error-handling.html#id15">Что дальше?</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Примеры:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/basic.html">Базовые примеры</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/basic.html#id2">Простой запрос</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/basic.html#id3">Пакетная обработка</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/basic.html#id4">Настройка параметров</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/basic.html#id5">Использование переменных окружения</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/basic.html#id6">Асинхронные запросы</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/basic.html#id7">Обработка ошибок</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/basic.html#id8">Полный пример</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/basic.html#id9">Что дальше?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/chains.html">Примеры цепочек</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/chains.html#id2">Простая цепочка</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/chains.html#id3">Цепочка с несколькими переменными</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/chains.html#id4">Цепочка с форматированием</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/chains.html#id5">Цепочка с валидацией</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/chains.html#id6">Цепочка с обработкой ошибок</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/chains.html#id7">Полный пример</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/chains.html#id8">Что дальше?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/advanced.html">Продвинутые примеры</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/advanced.html#rag">RAG система с документами</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/advanced.html#id2">Мультиагентная система</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/advanced.html#id3">Система с памятью и контекстом</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/advanced.html#id4">Система мониторинга и логирования</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/advanced.html#id5">Система кэширования</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/advanced.html#id6">Полный пример</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/advanced.html#id7">Что дальше?</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">API документация:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/evolution-inference.html">EvolutionInference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/evolution-inference.html#evolution_langchain.evolution_inference.TokenManager"><code class="docutils literal notranslate"><span class="pre">TokenManager</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/evolution-inference.html#evolution_langchain.evolution_inference.EvolutionInference"><code class="docutils literal notranslate"><span class="pre">EvolutionInference</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/evolution-inference.html#id1">Обзор</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/evolution-inference.html#id2">Быстрый пример</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/evolution-inference.html#id3">Параметры инициализации</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/evolution-inference.html#id7">Свойства</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/evolution-inference.html#id8">Управление токенами</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/evolution-inference.html#id9">Обработка ошибок</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/evolution-inference.html#langchain">Интеграция с LangChain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/evolution-inference.html#id12">Примеры конфигурации</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/evolution-inference.html#id16">Лучшие практики</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/evolution-inference.html#id20">См. также</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/token-manager.html">TokenManager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/token-manager.html#id1">Обзор</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/token-manager.html#id2">Основные возможности</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/token-manager.html#id3">Инициализация</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/token-manager.html#id6">Внутренняя логика</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/token-manager.html#id9">Обработка ошибок</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/token-manager.html#id11">Мониторинг</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/token-manager.html#id14">Кастомизация</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/token-manager.html#id17">Безопасность</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/token-manager.html#id20">Интеграция</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/token-manager.html#id22">См. также</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+<section id="id6">
+<h1>Индексы и таблицы<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-right" title="Быстрый старт" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Evolution ML Inference Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

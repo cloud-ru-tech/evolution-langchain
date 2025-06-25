@@ -1,0 +1,599 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Основы использования &mdash; Evolution LangChain 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=95aa0e50" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=af2ce170"></script>
+      <script src="../_static/doctools.js?v=888ff710"></script>
+      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Интеграция с LangChain" href="langchain-integration.html" />
+    <link rel="prev" title="Установка" href="../installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Evolution LangChain
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Руководство пользователя:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Быстрый старт</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Установка</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Основы использования</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Инициализация</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Базовая инициализация</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Полная инициализация с параметрами</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">Параметры конфигурации</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Обязательные параметры</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Опциональные параметры</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">Основные методы</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#invoke">invoke() - Одиночный запрос</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generate">generate() - Пакетная обработка</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">Асинхронные методы</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">Настройка параметров генерации</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#temperature">Temperature (Температура)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#max-tokens">Max Tokens (Максимальное количество токенов)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stop-sequences">Stop Sequences (Последовательности остановки)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#top-p-nucleus-sampling">Top-p (Nucleus Sampling)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">Штрафы</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#langchain">Интеграция с LangChain</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id12">Создание цепочек</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">Использование с агентами</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">Работа с векторными хранилищами</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id15">Обработка ошибок</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id16">Базовая обработка ошибок</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id17">Продвинутая обработка ошибок</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id18">Что дальше?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="langchain-integration.html">Интеграция с LangChain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="token-management.html">Управление токенами</a></li>
+<li class="toctree-l1"><a class="reference internal" href="error-handling.html">Обработка ошибок</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Примеры:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/basic.html">Базовые примеры</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/chains.html">Примеры цепочек</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/advanced.html">Продвинутые примеры</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API документация:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/evolution-inference.html">EvolutionInference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/token-manager.html">TokenManager</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Evolution LangChain</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Основы использования</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/cloud-ru-tech/evolution-langchain-python/blob/main/docs/guide/basics.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>Основы использования<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
+<p>Этот раздел содержит подробное руководство по использованию Evolution LangChain.</p>
+<section id="id2">
+<h2>Инициализация<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<section id="id3">
+<h3>Базовая инициализация<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">evolution_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvolutionInference</span>
+
+<span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model-name&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>Полная инициализация с параметрами<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="c1"># Обязательные параметры</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model-name&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span><span class="p">,</span>
+
+    <span class="c1"># Настройки аутентификации</span>
+    <span class="n">auth_url</span><span class="o">=</span><span class="s2">&quot;https://iam.api.cloud.ru/api/v1/auth/token&quot;</span><span class="p">,</span>
+
+    <span class="c1"># Параметры генерации</span>
+    <span class="n">temperature</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+    <span class="n">top_p</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">frequency_penalty</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">presence_penalty</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">stop</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+
+    <span class="c1"># Настройки сети</span>
+    <span class="n">request_timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id5">
+<h2>Параметры конфигурации<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<section id="id6">
+<h3>Обязательные параметры<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Параметр</p></th>
+<th class="head"><p>Тип</p></th>
+<th class="head"><p>Описание</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">model</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Название модели для использования</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">key_id</span></code></p></td>
+<td><p>str</p></td>
+<td><p>ID ключа для аутентификации</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">secret</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Секретный ключ для аутентификации</p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p><code class="docutils literal notranslate"><span class="pre">base_url</span></code> | str | Базовый URL API Evolution Inference</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id7">
+<h3>Опциональные параметры<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Параметр</p></th>
+<th class="head"><p>Тип</p></th>
+<th class="head"><p>По умолчанию</p></th>
+<th class="head"><p>Описание</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">auth_url</span></code></p></td>
+<td><p>str</p></td>
+<td><p>предустановлен</p></td>
+<td><p>URL сервера аутентификации</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">temperature</span></code></p></td>
+<td><p>float</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1.0</span></code></p></td>
+<td><p>Контроль случайности генерации</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_tokens</span></code></p></td>
+<td><p>int</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">512</span></code></p></td>
+<td><p>Максимальное количество токенов</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">top_p</span></code></p></td>
+<td><p>float</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1.0</span></code></p></td>
+<td><p>Nucleus sampling</p></td>
+</tr>
+<tr class="row-even"><td colspan="4"><p><code class="docutils literal notranslate"><span class="pre">frequency_penalty</span></code> | float | <code class="docutils literal notranslate"><span class="pre">0.0</span></code>    | Штраф за частоту повторений</p></td>
+</tr>
+<tr class="row-odd"><td colspan="4"><p><code class="docutils literal notranslate"><span class="pre">presence_penalty</span></code> | float | <code class="docutils literal notranslate"><span class="pre">0.0</span></code>     | Штраф за присутствие токенов</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">stop</span></code></p></td>
+<td colspan="3"><p>List[str] | <code class="docutils literal notranslate"><span class="pre">None</span></code>   | Последовательности остановки</p></td>
+</tr>
+<tr class="row-odd"><td colspan="3"><p><code class="docutils literal notranslate"><span class="pre">request_timeout</span></code> | int   | <code class="docutils literal notranslate"><span class="pre">60</span></code></p></td>
+<td><p>Таймаут запросов (секунды)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="id8">
+<h2>Основные методы<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h2>
+<section id="invoke">
+<h3>invoke() - Одиночный запрос<a class="headerlink" href="#invoke" title="Permalink to this heading"></a></h3>
+<p>Самый простой способ отправить запрос:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;Расскажи о машинном обучении&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="generate">
+<h3>generate() - Пакетная обработка<a class="headerlink" href="#generate" title="Permalink to this heading"></a></h3>
+<p>Для обработки нескольких промптов одновременно:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prompts</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;Что такое Python?&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Что такое JavaScript?&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Что такое машинное обучение?&quot;</span>
+<span class="p">]</span>
+
+<span class="n">responses</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">prompts</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">generation_list</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">responses</span><span class="o">.</span><span class="n">generations</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Промпт </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">prompts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ответ: </span><span class="si">{</span><span class="n">generation_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h3>Асинхронные методы<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h3>
+<p>Для асинхронного выполнения запросов:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">async_example</span><span class="p">():</span>
+    <span class="c1"># Асинхронный одиночный запрос</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">llm</span><span class="o">.</span><span class="n">ainvoke</span><span class="p">(</span><span class="s2">&quot;Расскажи о квантовых компьютерах&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+    <span class="c1"># Асинхронная пакетная обработка</span>
+    <span class="n">prompts</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Вопрос 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Вопрос 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Вопрос 3&quot;</span><span class="p">]</span>
+    <span class="n">responses</span> <span class="o">=</span> <span class="k">await</span> <span class="n">llm</span><span class="o">.</span><span class="n">agenerate</span><span class="p">(</span><span class="n">prompts</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">responses</span>
+
+<span class="c1"># Запуск асинхронной функции</span>
+<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">async_example</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id10">
+<h2>Настройка параметров генерации<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h2>
+<section id="temperature">
+<h3>Temperature (Температура)<a class="headerlink" href="#temperature" title="Permalink to this heading"></a></h3>
+<p>Контролирует случайность в генерации текста:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Более детерминированные ответы</span>
+<span class="n">llm_conservative</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span><span class="p">,</span>
+    <span class="n">temperature</span><span class="o">=</span><span class="mf">0.1</span>  <span class="c1"># Низкая случайность</span>
+<span class="p">)</span>
+
+<span class="c1"># Более креативные ответы</span>
+<span class="n">llm_creative</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span><span class="p">,</span>
+    <span class="n">temperature</span><span class="o">=</span><span class="mf">1.5</span>  <span class="c1"># Высокая случайность</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="max-tokens">
+<h3>Max Tokens (Максимальное количество токенов)<a class="headerlink" href="#max-tokens" title="Permalink to this heading"></a></h3>
+<p>Ограничивает длину ответа:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Короткие ответы</span>
+<span class="n">llm_short</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span><span class="p">,</span>
+    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">50</span>
+<span class="p">)</span>
+
+<span class="c1"># Длинные ответы</span>
+<span class="n">llm_long</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span><span class="p">,</span>
+    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">2000</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="stop-sequences">
+<h3>Stop Sequences (Последовательности остановки)<a class="headerlink" href="#stop-sequences" title="Permalink to this heading"></a></h3>
+<p>Определяют, где остановить генерацию:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span><span class="p">,</span>
+    <span class="n">stop</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;Конец&quot;</span><span class="p">,</span> <span class="s2">&quot;###&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="top-p-nucleus-sampling">
+<h3>Top-p (Nucleus Sampling)<a class="headerlink" href="#top-p-nucleus-sampling" title="Permalink to this heading"></a></h3>
+<p>Контролирует разнообразие через nucleus sampling:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Более разнообразные ответы</span>
+<span class="n">llm_diverse</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span><span class="p">,</span>
+    <span class="n">top_p</span><span class="o">=</span><span class="mf">0.8</span>
+<span class="p">)</span>
+
+<span class="c1"># Более предсказуемые ответы</span>
+<span class="n">llm_focused</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span><span class="p">,</span>
+    <span class="n">top_p</span><span class="o">=</span><span class="mf">0.95</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3>Штрафы<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h3>
+<p>Frequency Penalty и Presence Penalty:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span><span class="p">,</span>
+    <span class="n">frequency_penalty</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>  <span class="c1"># Штраф за повторения</span>
+    <span class="n">presence_penalty</span><span class="o">=</span><span class="mf">0.3</span>    <span class="c1"># Штраф за присутствие токенов</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="langchain">
+<h2>Интеграция с LangChain<a class="headerlink" href="#langchain" title="Permalink to this heading"></a></h2>
+<section id="id12">
+<h3>Создание цепочек<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">evolution_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvolutionInference</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.chains</span><span class="w"> </span><span class="kn">import</span> <span class="n">LLMChain</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.prompts</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptTemplate</span>
+
+<span class="c1"># Создание шаблона</span>
+<span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Ты - эксперт по </span><span class="si">{topic}</span><span class="s2">. Ответь на вопрос подробно и информативно.</span>
+
+<span class="s2">Вопрос: </span><span class="si">{question}</span>
+
+<span class="s2">Ответ:&quot;&quot;&quot;</span>
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="n">PromptTemplate</span><span class="p">(</span>
+    <span class="n">template</span><span class="o">=</span><span class="n">template</span><span class="p">,</span>
+    <span class="n">input_variables</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;topic&quot;</span><span class="p">,</span> <span class="s2">&quot;question&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Создание LLM</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Создание цепочки</span>
+<span class="n">chain</span> <span class="o">=</span> <span class="n">LLMChain</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">)</span>
+
+<span class="c1"># Выполнение</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">chain</span><span class="o">.</span><span class="n">run</span><span class="p">({</span>
+    <span class="s2">&quot;topic&quot;</span><span class="p">:</span> <span class="s2">&quot;машинное обучение&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="s2">&quot;Что такое нейронные сети?&quot;</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</section>
+<section id="id13">
+<h3>Использование с агентами<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">evolution_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvolutionInference</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.agents</span><span class="w"> </span><span class="kn">import</span> <span class="n">initialize_agent</span><span class="p">,</span> <span class="n">Tool</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">DuckDuckGoSearchRun</span>
+
+<span class="c1"># Создание инструментов</span>
+<span class="n">search</span> <span class="o">=</span> <span class="n">DuckDuckGoSearchRun</span><span class="p">()</span>
+<span class="n">tools</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Tool</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Search&quot;</span><span class="p">,</span>
+        <span class="n">func</span><span class="o">=</span><span class="n">search</span><span class="o">.</span><span class="n">run</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Полезно для поиска актуальной информации&quot;</span>
+    <span class="p">)</span>
+<span class="p">]</span>
+
+<span class="c1"># Создание LLM</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Создание агента</span>
+<span class="n">agent</span> <span class="o">=</span> <span class="n">initialize_agent</span><span class="p">(</span>
+    <span class="n">tools</span><span class="p">,</span> <span class="n">llm</span><span class="p">,</span> <span class="n">agent</span><span class="o">=</span><span class="s2">&quot;zero-shot-react-description&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="c1"># Выполнение</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;Какая погода в Москве сегодня?&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id14">
+<h3>Работа с векторными хранилищами<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">evolution_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvolutionInference</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.embeddings</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAIEmbeddings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chroma</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">langchain.text_splitter</span><span class="w"> </span><span class="kn">import</span> <span class="n">CharacterTextSplitter</span>
+
+<span class="c1"># Создание LLM</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Создание векторного хранилища</span>
+<span class="n">embeddings</span> <span class="o">=</span> <span class="n">OpenAIEmbeddings</span><span class="p">()</span>
+<span class="n">text_splitter</span> <span class="o">=</span> <span class="n">CharacterTextSplitter</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">chunk_overlap</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">texts</span> <span class="o">=</span> <span class="n">text_splitter</span><span class="o">.</span><span class="n">split_text</span><span class="p">(</span><span class="s2">&quot;Ваш текст здесь...&quot;</span><span class="p">)</span>
+<span class="n">vectorstore</span> <span class="o">=</span> <span class="n">Chroma</span><span class="o">.</span><span class="n">from_texts</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">)</span>
+
+<span class="c1"># Поиск и ответ</span>
+<span class="n">docs</span> <span class="o">=</span> <span class="n">vectorstore</span><span class="o">.</span><span class="n">similarity_search</span><span class="p">(</span><span class="s2">&quot;Ваш вопрос&quot;</span><span class="p">)</span>
+<span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">doc</span><span class="o">.</span><span class="n">page_content</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">docs</span><span class="p">])</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Контекст: </span><span class="si">{</span><span class="n">context</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">Вопрос: Ваш вопрос&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id15">
+<h2>Обработка ошибок<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h2>
+<section id="id16">
+<h3>Базовая обработка ошибок<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">evolution_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvolutionInference</span>
+
+<span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span>
+<span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;Привет!&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Произошла ошибка: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Тип ошибки: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id17">
+<h3>Продвинутая обработка ошибок<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">evolution_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvolutionInference</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">make_request_with_retry</span><span class="p">(</span><span class="n">llm</span><span class="p">,</span> <span class="n">prompt</span><span class="p">,</span> <span class="n">max_retries</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_retries</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">response</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Попытка </span><span class="si">{</span><span class="n">attempt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> не удалась: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">max_retries</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">attempt</span><span class="p">)</span>  <span class="c1"># Экспоненциальная задержка</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">e</span>
+
+<span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span>
+<span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">make_request_with_retry</span><span class="p">(</span><span class="n">llm</span><span class="p">,</span> <span class="s2">&quot;Расскажи анекдот&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Все попытки не удались: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id18">
+<h2>Что дальше?<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>Изучите <a class="reference internal" href="langchain-integration.html"><span class="doc">Интеграция с LangChain</span></a> для продвинутых паттернов интеграции</p></li>
+<li><p>Прочитайте <a class="reference internal" href="token-management.html"><span class="doc">Управление токенами</span></a> для понимания управления токенами</p></li>
+<li><p>Посмотрите <a class="reference internal" href="error-handling.html"><span class="doc">Обработка ошибок</span></a> для детальной обработки ошибок</p></li>
+<li><p>Изучите <a class="reference internal" href="../examples/advanced.html"><span class="doc">Продвинутые примеры</span></a> для сложных примеров использования</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../installation.html" class="btn btn-neutral float-left" title="Установка" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="langchain-integration.html" class="btn btn-neutral float-right" title="Интеграция с LangChain" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Evolution ML Inference Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

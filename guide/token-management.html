@@ -1,0 +1,640 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Управление токенами &mdash; Evolution LangChain 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=95aa0e50" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=af2ce170"></script>
+      <script src="../_static/doctools.js?v=888ff710"></script>
+      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Обработка ошибок" href="error-handling.html" />
+    <link rel="prev" title="Интеграция с LangChain" href="langchain-integration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Evolution LangChain
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Руководство пользователя:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Быстрый старт</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Установка</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">Основы использования</a></li>
+<li class="toctree-l1"><a class="reference internal" href="langchain-integration.html">Интеграция с LangChain</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Управление токенами</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Автоматическое управление</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Жизненный цикл токена</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">Особенности реализации</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Буферизация времени</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#thread-safety">Thread-safety</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Обработка ошибок</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">Конфигурация аутентификации</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#auth-url">Альтернативный auth URL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Использование переменных окружения</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">Мониторинг токенов</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id10">Логирование</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">Метрики</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">Безопасность</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id13">Защита учетных данных</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">Ротация ключей</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id15">Обработка ошибок токенов</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id16">Повторные попытки</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fallback">Fallback механизм</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id17">Полный пример</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id18">Что дальше?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="error-handling.html">Обработка ошибок</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Примеры:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/basic.html">Базовые примеры</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/chains.html">Примеры цепочек</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/advanced.html">Продвинутые примеры</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API документация:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/evolution-inference.html">EvolutionInference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/token-manager.html">TokenManager</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Evolution LangChain</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Управление токенами</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/cloud-ru-tech/evolution-langchain-python/blob/main/docs/guide/token-management.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>Управление токенами<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
+<p>Этот раздел содержит подробное руководство по автоматическому управлению токенами в Evolution LangChain.</p>
+<section id="id2">
+<h2>Автоматическое управление<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<p>Токены управляются автоматически без вмешательства пользователя:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">evolution_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvolutionInference</span>
+
+<span class="c1"># Токены управляются автоматически</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># При первом запросе автоматически получается токен</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;Привет!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>Жизненный цикл токена<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Получение</strong>: При первом API запросе автоматически выполняется аутентификация</p></li>
+<li><p><strong>Кэширование</strong>: Токен сохраняется в памяти</p></li>
+<li><p><strong>Мониторинг</strong>: Постоянная проверка времени истечения</p></li>
+<li><p><strong>Обновление</strong>: Автоматическое обновление за 30 секунд до истечения</p></li>
+<li><p><strong>Повтор</strong>: Цикл повторяется для поддержания актуальности</p></li>
+</ol>
+</section>
+<section id="id4">
+<h2>Особенности реализации<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<section id="id5">
+<h3>Буферизация времени<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<p>Токен обновляется за 30 секунд до истечения:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">REFRESH_BUFFER_SECONDS</span> <span class="o">=</span> <span class="mi">30</span>
+</pre></div>
+</div>
+<p>Это предотвращает ошибки из-за истёкших токенов и обеспечивает бесперебойную работу.</p>
+</section>
+<section id="thread-safety">
+<h3>Thread-safety<a class="headerlink" href="#thread-safety" title="Permalink to this heading"></a></h3>
+<p>Все операции с токенами thread-safe благодаря использованию блокировок:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+
+<span class="c1"># Внутри TokenManager</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_token_expired</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_token</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_token</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3>Обработка ошибок<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<p>При ошибках аутентификации выбрасывается <code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;Тест&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка аутентификации: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># Возможные причины:</span>
+    <span class="c1"># - Неверные key_id/secret</span>
+    <span class="c1"># - Проблемы с сетью</span>
+    <span class="c1"># - Недоступность auth сервера</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id7">
+<h2>Конфигурация аутентификации<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h2>
+<section id="auth-url">
+<h3>Альтернативный auth URL<a class="headerlink" href="#auth-url" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span><span class="p">,</span>
+    <span class="n">auth_url</span><span class="o">=</span><span class="s2">&quot;https://custom-auth-server.com/api/v1/token&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h3>Использование переменных окружения<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">EVOLUTION_KEY_ID</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">EVOLUTION_SECRET</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">EVOLUTION_TOKEN_URL</span><span class="o">=</span><span class="s2">&quot;https://custom-auth-server.com/api/v1/token&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EVOLUTION_KEY_ID&quot;</span><span class="p">),</span>
+    <span class="n">secret</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EVOLUTION_SECRET&quot;</span><span class="p">),</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span><span class="p">,</span>
+    <span class="n">auth_url</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EVOLUTION_TOKEN_URL&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id9">
+<h2>Мониторинг токенов<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h2>
+<section id="id10">
+<h3>Логирование<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h3>
+<p>Включите логирование для отладки:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;evolution_langchain&quot;</span><span class="p">)</span>
+
+<span class="c1"># Теперь будут видны сообщения о получении и обновлении токенов</span>
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3>Метрики<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h3>
+<p>Создайте wrapper для сбора метрик:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TokenStats</span><span class="p">:</span>
+    <span class="n">total_refreshes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">successful_refreshes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">avg_refresh_time</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MonitoredEvolutionInference</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">llm</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">llm</span> <span class="o">=</span> <span class="n">llm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stats</span> <span class="o">=</span> <span class="n">TokenStats</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">invoke</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="p">):</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+
+            <span class="c1"># Обновить статистику</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">successful_refreshes</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">refresh_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_avg_time</span><span class="p">(</span><span class="n">refresh_time</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">response</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">total_refreshes</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">raise</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_avg_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_time</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">successful_refreshes</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">avg_refresh_time</span> <span class="o">=</span> <span class="n">new_time</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Скользящее среднее</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">avg_refresh_time</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">avg_refresh_time</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">successful_refreshes</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">new_time</span><span class="p">)</span>
+                <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">successful_refreshes</span>
+            <span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id12">
+<h2>Безопасность<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h2>
+<section id="id13">
+<h3>Защита учетных данных<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h3>
+<p>Используйте переменные окружения для хранения секретов:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dotenv</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dotenv</span>
+
+<span class="c1"># Загрузка переменных из .env файла</span>
+<span class="n">load_dotenv</span><span class="p">()</span>
+
+<span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EVOLUTION_MODEL&quot;</span><span class="p">),</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EVOLUTION_KEY_ID&quot;</span><span class="p">),</span>
+    <span class="n">secret</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EVOLUTION_SECRET&quot;</span><span class="p">),</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EVOLUTION_BASE_URL&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id14">
+<h3>Ротация ключей<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h3>
+<p>Регулярно обновляйте ключи доступа:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">KeyRotationManager</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">primary_key_id</span><span class="p">,</span> <span class="n">primary_secret</span><span class="p">,</span>
+                 <span class="n">backup_key_id</span><span class="p">,</span> <span class="n">backup_secret</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">primary_key_id</span> <span class="o">=</span> <span class="n">primary_key_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">primary_secret</span> <span class="o">=</span> <span class="n">primary_secret</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backup_key_id</span> <span class="o">=</span> <span class="n">backup_key_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backup_secret</span> <span class="o">=</span> <span class="n">backup_secret</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_primary</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_current_credentials</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_primary</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_key_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_secret</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">backup_key_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">backup_secret</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">rotate_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_primary</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_primary</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Переключение на </span><span class="si">{</span><span class="s1">&#39;основной&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">use_primary</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;резервный&#39;</span><span class="si">}</span><span class="s2"> ключ&quot;</span><span class="p">)</span>
+
+<span class="c1"># Использование</span>
+<span class="n">key_manager</span> <span class="o">=</span> <span class="n">KeyRotationManager</span><span class="p">(</span>
+    <span class="n">primary_key_id</span><span class="o">=</span><span class="s2">&quot;primary-key&quot;</span><span class="p">,</span>
+    <span class="n">primary_secret</span><span class="o">=</span><span class="s2">&quot;primary-secret&quot;</span><span class="p">,</span>
+    <span class="n">backup_key_id</span><span class="o">=</span><span class="s2">&quot;backup-key&quot;</span><span class="p">,</span>
+    <span class="n">backup_secret</span><span class="o">=</span><span class="s2">&quot;backup-secret&quot;</span>
+<span class="p">)</span>
+
+<span class="n">key_id</span><span class="p">,</span> <span class="n">secret</span> <span class="o">=</span> <span class="n">key_manager</span><span class="o">.</span><span class="n">get_current_credentials</span><span class="p">()</span>
+<span class="n">llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="n">key_id</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="n">secret</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id15">
+<h2>Обработка ошибок токенов<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h2>
+<section id="id16">
+<h3>Повторные попытки<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h3>
+<p>Реализуйте механизм повторных попыток:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">evolution_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvolutionInference</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">RetryableEvolutionInference</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">llm</span><span class="p">,</span> <span class="n">max_retries</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">retry_delay</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">llm</span> <span class="o">=</span> <span class="n">llm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_retries</span> <span class="o">=</span> <span class="n">max_retries</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">retry_delay</span> <span class="o">=</span> <span class="n">retry_delay</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">invoke</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_retries</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;authentication&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">and</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_retries</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка аутентификации, попытка </span><span class="si">{</span><span class="n">attempt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max_retries</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">retry_delay</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">attempt</span><span class="p">))</span>  <span class="c1"># Экспоненциальная задержка</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">e</span>
+
+<span class="c1"># Использование</span>
+<span class="n">base_llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;your-key-id&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;your-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span>
+<span class="p">)</span>
+
+<span class="n">retryable_llm</span> <span class="o">=</span> <span class="n">RetryableEvolutionInference</span><span class="p">(</span><span class="n">base_llm</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">retryable_llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;Привет!&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Все попытки не удались: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="fallback">
+<h3>Fallback механизм<a class="headerlink" href="#fallback" title="Permalink to this heading"></a></h3>
+<p>Реализуйте fallback на резервные ключи:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">FallbackEvolutionInference</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">primary_llm</span><span class="p">,</span> <span class="n">backup_llm</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">primary_llm</span> <span class="o">=</span> <span class="n">primary_llm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backup_llm</span> <span class="o">=</span> <span class="n">backup_llm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_primary</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">invoke</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_primary</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">backup_llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;authentication&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Переключение на резервный ключ&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">use_primary</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">backup_llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">e</span>
+
+<span class="c1"># Создание основного и резервного LLM</span>
+<span class="n">primary_llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;primary-key&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;primary-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span>
+<span class="p">)</span>
+
+<span class="n">backup_llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;your-model&quot;</span><span class="p">,</span>
+    <span class="n">key_id</span><span class="o">=</span><span class="s2">&quot;backup-key&quot;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s2">&quot;backup-secret&quot;</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span>
+<span class="p">)</span>
+
+<span class="n">fallback_llm</span> <span class="o">=</span> <span class="n">FallbackEvolutionInference</span><span class="p">(</span><span class="n">primary_llm</span><span class="p">,</span> <span class="n">backup_llm</span><span class="p">)</span>
+
+<span class="c1"># Использование</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">fallback_llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">&quot;Привет!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id17">
+<h2>Полный пример<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h2>
+<p>Объединение всех возможностей управления токенами:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">evolution_langchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">EvolutionInference</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TokenMetrics</span><span class="p">:</span>
+    <span class="n">total_requests</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">auth_errors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">successful_refreshes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">avg_response_time</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">AdvancedTokenManager</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">key_id</span><span class="p">,</span> <span class="n">secret</span><span class="p">,</span> <span class="n">base_url</span><span class="p">,</span>
+                 <span class="n">backup_key_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">backup_secret</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key_id</span> <span class="o">=</span> <span class="n">key_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">secret</span> <span class="o">=</span> <span class="n">secret</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="n">base_url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backup_key_id</span> <span class="o">=</span> <span class="n">backup_key_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backup_secret</span> <span class="o">=</span> <span class="n">backup_secret</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="n">TokenMetrics</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_primary</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># Настройка логирования</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+        <span class="c1"># Создание основного LLM</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">primary_llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">key_id</span><span class="o">=</span><span class="n">key_id</span><span class="p">,</span>
+            <span class="n">secret</span><span class="o">=</span><span class="n">secret</span><span class="p">,</span>
+            <span class="n">base_url</span><span class="o">=</span><span class="n">base_url</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Создание резервного LLM если есть резервные ключи</span>
+        <span class="k">if</span> <span class="n">backup_key_id</span> <span class="ow">and</span> <span class="n">backup_secret</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">backup_llm</span> <span class="o">=</span> <span class="n">EvolutionInference</span><span class="p">(</span>
+                <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                <span class="n">key_id</span><span class="o">=</span><span class="n">backup_key_id</span><span class="p">,</span>
+                <span class="n">secret</span><span class="o">=</span><span class="n">backup_secret</span><span class="p">,</span>
+                <span class="n">base_url</span><span class="o">=</span><span class="n">base_url</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">backup_llm</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">invoke</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="p">,</span> <span class="n">max_retries</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">total_requests</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_retries</span><span class="p">):</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Выбор LLM</span>
+                <span class="n">current_llm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">primary_llm</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_primary</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">backup_llm</span>
+
+                <span class="k">if</span> <span class="n">current_llm</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Нет доступных LLM&quot;</span><span class="p">)</span>
+
+                <span class="n">response</span> <span class="o">=</span> <span class="n">current_llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+
+                <span class="c1"># Обновление метрик</span>
+                <span class="n">response_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_avg_time</span><span class="p">(</span><span class="n">response_time</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Запрос выполнен за </span><span class="si">{</span><span class="n">response_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">с&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">response</span>
+
+            <span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">response_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">auth_errors</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="k">if</span> <span class="s2">&quot;authentication&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка аутентификации, попытка </span><span class="si">{</span><span class="n">attempt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">max_retries</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                    <span class="c1"># Переключение на резервный ключ</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">backup_llm</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_primary</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Переключение на резервный ключ&quot;</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">use_primary</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="k">continue</span>
+
+                    <span class="c1"># Повторная попытка с задержкой</span>
+                    <span class="k">if</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">max_retries</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">delay</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">attempt</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ожидание </span><span class="si">{</span><span class="n">delay</span><span class="si">}</span><span class="s2">с перед повторной попыткой&quot;</span><span class="p">)</span>
+                        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">delay</span><span class="p">)</span>
+                        <span class="k">continue</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ошибка запроса: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">e</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_avg_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_time</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">total_requests</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">avg_response_time</span> <span class="o">=</span> <span class="n">new_time</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">avg_response_time</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">avg_response_time</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">total_requests</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">new_time</span><span class="p">)</span>
+                <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">total_requests</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;total_requests&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">total_requests</span><span class="p">,</span>
+            <span class="s2">&quot;auth_errors&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">auth_errors</span><span class="p">,</span>
+            <span class="s2">&quot;success_rate&quot;</span><span class="p">:</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">total_requests</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">auth_errors</span><span class="p">)</span>
+                            <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">total_requests</span> <span class="o">*</span> <span class="mi">100</span><span class="p">),</span>
+            <span class="s2">&quot;avg_response_time&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">avg_response_time</span><span class="p">,</span>
+            <span class="s2">&quot;using_primary&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_primary</span>
+        <span class="p">}</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🚀 Evolution LangChain - Управление токенами&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+
+    <span class="c1"># Создание менеджера токенов</span>
+    <span class="n">token_manager</span> <span class="o">=</span> <span class="n">AdvancedTokenManager</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EVOLUTION_MODEL&quot;</span><span class="p">,</span> <span class="s2">&quot;your-model&quot;</span><span class="p">),</span>
+        <span class="n">key_id</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EVOLUTION_KEY_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;your-key-id&quot;</span><span class="p">),</span>
+        <span class="n">secret</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EVOLUTION_SECRET&quot;</span><span class="p">,</span> <span class="s2">&quot;your-secret&quot;</span><span class="p">),</span>
+        <span class="n">base_url</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EVOLUTION_BASE_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;https://your-api-endpoint.com/v1&quot;</span><span class="p">),</span>
+        <span class="n">backup_key_id</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EVOLUTION_BACKUP_KEY_ID&quot;</span><span class="p">),</span>
+        <span class="n">backup_secret</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EVOLUTION_BACKUP_SECRET&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Менеджер токенов инициализирован&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+    <span class="c1"># Выполнение запросов</span>
+    <span class="n">questions</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;Что такое Python?&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Объясни машинное обучение&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Что такое нейронные сети?&quot;</span>
+    <span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">question</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">questions</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Запрос </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">question</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ответ: </span><span class="si">{</span><span class="n">response</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Ошибка: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">()</span>
+
+    <span class="c1"># Вывод статистики</span>
+    <span class="n">stats</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_stats</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📊 Статистика:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">stats</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="id18">
+<h2>Что дальше?<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p>Изучите <a class="reference internal" href="error-handling.html"><span class="doc">Обработка ошибок</span></a> для детальной обработки ошибок</p></li>
+<li><p>Прочитайте <a class="reference internal" href="langchain-integration.html"><span class="doc">Интеграция с LangChain</span></a> для интеграции с LangChain</p></li>
+<li><p>Посмотрите <a class="reference internal" href="../api/token-manager.html"><span class="doc">TokenManager</span></a> для документации API</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="langchain-integration.html" class="btn btn-neutral float-left" title="Интеграция с LangChain" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="error-handling.html" class="btn btn-neutral float-right" title="Обработка ошибок" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Evolution ML Inference Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
