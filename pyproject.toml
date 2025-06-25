@@ -1,6 +1,6 @@
 [project]
 name = "evolution-langchain"
-version = "0.1.0"
+version = "1.0.0"
 description = "Evolution LangChain with automatic token management"
 dynamic = ["readme"]
 license-files = ["LICEN[CS]E*"]
